@@ -14,7 +14,7 @@ class Form extends Component {
         this.brandRef = React.createRef();
         this.yearRef = React.createRef();
         this.basicPlanRef = React.createRef();
-        this.fullPlanRef = React.createRef();
+        this.fullPlanRef = React.createRef();        
         /*Si los atributos estuvieran por fuera del constructor no sería necesesario el this,
         de preferencia es mejor trabajar sin el constructor porque hace lo mismo*/ 
     }
@@ -22,12 +22,25 @@ class Form extends Component {
     quoteInsurance = (e)=>{
         e.preventDefault();
 
+        const plan =this.basicPlanRef.current.checked? 'Basic':'Full';
+
         //Obtener los datos
         console.log(this.brandRef.current.value);
 
         //Crear el objeto
+        const infoCar={
+            brand:this.brandRef.current.value,
+            year:this.yearRef.current.value,
+            plan:plan
+        }
 
+        
+    
         //enviarlo al componente principal
+        this.props.quoteInsurance(infoCar);
+
+        //Resetear el formulario (opcional)
+        e.currentTarget.reset()
     }
 
     render(){
@@ -48,6 +61,7 @@ class Form extends Component {
                   <div className="field">
                       <label>Año</label>
                       <select name="year" ref={this.yearRef} >
+                          <option value="2021">2021</option>
                           <option value="2020">2020</option>
                           <option value="2019">2019</option>
                           <option value="2018">2018</option>
